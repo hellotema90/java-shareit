@@ -8,9 +8,14 @@ import java.util.Map;
 
 public interface ItemService {
     ItemDto addItem(int ownerId, Item item);
+
     ItemDto updateItem(int ownerId, int itemId, Map<String, String> updates);
+
     ItemDto getItemById(int itemId);
+
     void deleteItemById(int itemId);
+
     List<ItemDto> getAllItems(int ownerId);
+
     List<ItemDto> getItemByText(String text);
 }

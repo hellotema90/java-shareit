@@ -14,6 +14,7 @@ public interface UserRepository {
     User getUserById(int id);
 
     void deleteUserById(int id);
+
     boolean userExists(int id);
 
 }

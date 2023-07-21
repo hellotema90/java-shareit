@@ -51,6 +51,7 @@ public class InMemoryUserRepository implements UserRepository {
         getUserById(userId);
         users.remove(userId);
     }
+
     @Override
     public boolean userExists(int id) {
         return users.containsKey(id);
