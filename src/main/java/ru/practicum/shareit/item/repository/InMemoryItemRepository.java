@@ -39,7 +39,7 @@ public class InMemoryItemRepository implements ItemRepository {
 
     @Override
     public void deleteItemById(int id) {
-        items.remove(items.get(id));
+        items.remove(id);
     }
 
     @Override
