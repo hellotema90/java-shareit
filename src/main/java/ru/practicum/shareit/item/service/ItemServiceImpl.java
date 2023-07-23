@@ -66,7 +66,6 @@ public class ItemServiceImpl implements ItemService {
 
     public List<ItemDto> getAllItems(int ownerId) {
         return ItemMapper.toItemDtoList(itemRepository.getAllItemsByUser(ownerId));
-
     }
 
     public List<ItemDto> getItemByText(String text) {//
