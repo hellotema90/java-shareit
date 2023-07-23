@@ -66,9 +66,9 @@ public class ItemServiceImpl implements ItemService {
         return ItemMapper.toItemDtoList(itemRepository.getAllItemsByUser(ownerId));
     }
 
-    public List<ItemDto> getItemByText(String text) {//
+    public List<ItemDto> getItemByText(String text) {
         text = text.toLowerCase();
-        if (text.isBlank()) {
+        if (text == null || text.isBlank()) {
             return Collections.emptyList();
         }
         String searchText = text;
