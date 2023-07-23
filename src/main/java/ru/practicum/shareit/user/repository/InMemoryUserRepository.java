@@ -48,7 +48,6 @@ public class InMemoryUserRepository implements UserRepository {
 
     @Override
     public void deleteUserById(int userId) {
-        getUserById(userId);
         users.remove(userId);
     }
 

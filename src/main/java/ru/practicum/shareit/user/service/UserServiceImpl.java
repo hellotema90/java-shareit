@@ -33,11 +33,13 @@ public class UserServiceImpl implements UserService {
             String name = updates.get("name");
             validateContainsName(name, id);
             user.setName(name.trim());
+            userRepository.updateUser(user);
         }
         if (updates.containsKey("email")) {
             String email = updates.get("email");
             validateContainsEmail(email, id);
             user.setEmail(email.trim());
+            userRepository.updateUser(user);
         }
         return UserMapper.toUserDto(user);
     }
@@ -66,8 +68,8 @@ public class UserServiceImpl implements UserService {
                 .filter(t -> foundEmail.equalsIgnoreCase(t.getEmail()))
                 .findFirst();
         if (userFound.isPresent()) {
-            log.info("Пользователь с таким email {} не найден.", email);
-            throw new ConflictException("Пользователь с таким EMAIL не найден.");
+            log.info("Пользователь с таким email {} уже существует.", email);
+            throw new ConflictException("Пользователь с таким EMAIL уже существует.");
         }
     }
 
@@ -83,8 +85,8 @@ public class UserServiceImpl implements UserService {
                 .filter(t -> foundName.equalsIgnoreCase(t.getName()))
                 .findFirst();
         if (userFound.isPresent()) {
-            log.info("Пользователь с таким name {} не найден.", name);
-            throw new NotFoundException("Пользователь с таким NAME не найден.");
+            log.info("Пользователь с таким name {} уже существует.", name);
+            throw new NotFoundException("Пользователь с таким NAME уже существует.");
         }
     }
 

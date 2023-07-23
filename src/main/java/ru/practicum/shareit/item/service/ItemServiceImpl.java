@@ -3,7 +3,6 @@ package ru.practicum.shareit.item.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.exeption.ForbiddenException;
 import ru.practicum.shareit.exeption.NotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.mapper.ItemMapper;
@@ -43,26 +42,17 @@ public class ItemServiceImpl implements ItemService {
 
         if (updates.containsKey("name")) {
             String value = updates.get("name");
-            validateString(value, "Name");
             log.info("Change name item {} owner {}", itemId, ownerId);
             item.setName(value);
         }
         if (updates.containsKey("description")) {
             String value = updates.get("description");
-            validateString(value, "Name");
             item.setDescription(value);
         }
         if (updates.containsKey("available")) {
             item.setAvailable(Boolean.valueOf(updates.get("available")));
         }
         return ItemMapper.toItemDto(item);
-    }
-
-    private void validateString(String value, String name) {
-        if (value == null || value.isBlank()) {
-            log.info("{} item is empty!", name);
-            throw new ForbiddenException(String.format("%s item is empty!", name));
-        }
     }
 
     public ItemDto getItemById(int itemId) {
@@ -79,11 +69,12 @@ public class ItemServiceImpl implements ItemService {
 
     }
 
-    public List<ItemDto> getItemByText(String text) {
+    public List<ItemDto> getItemByText(String text) {//
+        text = text.toLowerCase();
         if (text == null || text.isBlank()) {
             return Collections.emptyList();
         }
-        String searchText = text.toLowerCase();
+        String searchText = text;
         return itemRepository.getAllItems()
                 .stream()
                 .filter(i -> (i.getDescription().toLowerCase().contains(searchText)
