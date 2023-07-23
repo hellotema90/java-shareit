@@ -1,9 +1,6 @@
-package ru.practicum.shareit.booking.dto;
+package ru.practicum.shareit.booking.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
@@ -19,7 +16,8 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookingDto {
+@Data
+public class Booking {
     private int id;
     @NotNull
     private LocalDate start;
@@ -27,5 +25,5 @@ public class BookingDto {
     private LocalDate end;
     private Item item;
     private User booker;
-    private String status;
+    private BookingStatus status;
 }

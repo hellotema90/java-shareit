@@ -1,9 +1,6 @@
-package ru.practicum.shareit.request.dto;
+package ru.practicum.shareit.request.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import ru.practicum.shareit.user.model.User;
 
@@ -19,7 +16,8 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemRequestDto {
+@Data
+public class ItemRequest {
     private  int id;
     @NotBlank(message = "описание не может быть пустым")
     private String description;
