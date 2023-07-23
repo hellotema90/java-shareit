@@ -39,7 +39,6 @@ public class ItemServiceImpl implements ItemService {
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException(String.format("Item id: %s owner id: %s не найдена.", itemId,
                         ownerId)));
-
         if (updates.containsKey("name")) {
             String value = updates.get("name");
             log.info("Change name item {} owner {}", itemId, ownerId);
@@ -61,7 +60,6 @@ public class ItemServiceImpl implements ItemService {
 
     public void deleteItemById(int itemId) {
         itemRepository.deleteItemById(itemId);
-
     }
 
     public List<ItemDto> getAllItems(int ownerId) {
@@ -70,7 +68,7 @@ public class ItemServiceImpl implements ItemService {
 
     public List<ItemDto> getItemByText(String text) {//
         text = text.toLowerCase();
-        if (text == null || text.isBlank()) {
+        if (text.isBlank()) {
             return Collections.emptyList();
         }
         String searchText = text;
