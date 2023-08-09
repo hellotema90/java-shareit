@@ -128,23 +128,23 @@ public class BookingServiceImpl implements BookingService {
 
         switch (state) {
             case WAITING:
-                return BookingMapper.toBookingDtoRequestsList
-                        (bookingRepository.findAllByBookerIdAndStatus(bookerId, BookingStatus.WAITING, sort));
+                return BookingMapper.toBookingDtoRequestsList(
+                        bookingRepository.findAllByBookerIdAndStatus(bookerId, BookingStatus.WAITING, sort));
             case REJECTED:
-                return BookingMapper.toBookingDtoRequestsList
-                        (bookingRepository.findAllByBookerIdAndStatus(bookerId, BookingStatus.REJECTED, sort));
+                return BookingMapper.toBookingDtoRequestsList(
+                        bookingRepository.findAllByBookerIdAndStatus(bookerId, BookingStatus.REJECTED, sort));
             case PAST:
                 return BookingMapper.toBookingDtoRequestsList(
                         bookingRepository.findAllByBookerIdAndEndBefore(bookerId, LocalDateTime.now(), sort));
             case FUTURE:
-                return BookingMapper.toBookingDtoRequestsList
-                        (bookingRepository.findAllByBookerIdAndStartAfter(bookerId, LocalDateTime.now(), sort));
+                return BookingMapper.toBookingDtoRequestsList(
+                        bookingRepository.findAllByBookerIdAndStartAfter(bookerId, LocalDateTime.now(), sort));
             case CURRENT:
-                return BookingMapper.toBookingDtoRequestsList
-                        (bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(bookerId, LocalDateTime.now()));
+                return BookingMapper.toBookingDtoRequestsList(
+                        bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(bookerId, LocalDateTime.now()));
             case ALL:
-                return BookingMapper.toBookingDtoRequestsList
-                        (bookingRepository.findAllByBookerId(bookerId, sort));
+                return BookingMapper.toBookingDtoRequestsList(
+                        bookingRepository.findAllByBookerId(bookerId, sort));
             default:
                 throw new IllegalArgumentException("Unknown state: UNSUPPORTED_STATUS");
         }
@@ -157,20 +157,20 @@ public class BookingServiceImpl implements BookingService {
 
         switch (state) {
             case WAITING:
-                return BookingMapper.toBookingDtoRequestsList
-                        (bookingRepository.findAllByOwnerIdAndStatus(ownerId, BookingStatus.WAITING));
+                return BookingMapper.toBookingDtoRequestsList(
+                        bookingRepository.findAllByOwnerIdAndStatus(ownerId, BookingStatus.WAITING));
             case REJECTED:
-                return BookingMapper.toBookingDtoRequestsList
-                        (bookingRepository.findAllByOwnerIdAndStatus(ownerId, BookingStatus.REJECTED));
+                return BookingMapper.toBookingDtoRequestsList(
+                        bookingRepository.findAllByOwnerIdAndStatus(ownerId, BookingStatus.REJECTED));
             case PAST:
-                return BookingMapper.toBookingDtoRequestsList
-                        (bookingRepository.findAllByOwnerIdAndEndBefore(ownerId, LocalDateTime.now()));
+                return BookingMapper.toBookingDtoRequestsList(
+                        bookingRepository.findAllByOwnerIdAndEndBefore(ownerId, LocalDateTime.now()));
             case FUTURE:
-                return BookingMapper.toBookingDtoRequestsList
-                        (bookingRepository.findAllByOwnerIdAndStartAfter(ownerId, LocalDateTime.now()));
+                return BookingMapper.toBookingDtoRequestsList(
+                        bookingRepository.findAllByOwnerIdAndStartAfter(ownerId, LocalDateTime.now()));
             case CURRENT:
-                return BookingMapper.toBookingDtoRequestsList
-                        (bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(ownerId, LocalDateTime.now()));
+                return BookingMapper.toBookingDtoRequestsList(
+                        bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(ownerId, LocalDateTime.now()));
             case ALL:
                 return BookingMapper.toBookingDtoRequestsList(
                         bookingRepository.findAllByOwnerId(ownerId, sort));

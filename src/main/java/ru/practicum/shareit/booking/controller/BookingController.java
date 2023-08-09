@@ -41,7 +41,7 @@ public class BookingController {
                                               @RequestHeader(userIdInHeader) long userId) {
         return bookingService.getBookingDtoById(bookingId, userId);
     }
-//
+
     @GetMapping
     public List<OutputBookingDto> getBookingsOfBooker(@RequestParam(defaultValue = "ALL") String state,
                                                       @RequestHeader(userIdInHeader) Long bookerId) {

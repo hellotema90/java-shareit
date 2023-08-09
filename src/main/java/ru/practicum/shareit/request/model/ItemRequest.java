@@ -30,6 +30,4 @@ public class ItemRequest {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "REQUEST_ID")
     private User requestor;
-    //@NotNull
-    //private LocalDate created;
 }
