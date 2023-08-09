@@ -9,15 +9,14 @@ import java.util.Map;
 public interface UserService {
     UserDto addUser(User user);
 
-    UserDto updateUser(int id, Map<String, String> updates);
+    UserDto updateUser(long id, Map<String, String> updates);
 
     List<UserDto> getAllUsers();
 
-    UserDto getUserById(int id);
+    User getUserById(long id);
 
-    void deleteUserById(int userId);
+    UserDto getUserDtoById(long id);
 
-    void validateContainsEmail(String email, int id);
+    void deleteUserById(long userId);
 
-    void validateContainsName(String name, int id);
 }

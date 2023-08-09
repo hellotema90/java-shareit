@@ -3,11 +3,12 @@ package ru.practicum.shareit.item.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import ru.practicum.shareit.request.model.ItemRequest;
+import ru.practicum.shareit.booking.dto.ShortBookingDto;
 import ru.practicum.shareit.user.model.User;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 /**
@@ -20,7 +21,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Data
 public class ItemDto {
-    private int id;
+    private Long id;
     @NotNull
     @NotBlank(message = "название не может быть пустым")
     private String name;
@@ -32,5 +33,8 @@ public class ItemDto {
     @JsonIgnore
     private User owner;
     @JsonIgnore
-    private ItemRequest request;
+    private Long request;
+    private ShortBookingDto lastBooking;
+    private ShortBookingDto nextBooking;
+    private List<CommentDto> comments;
 }

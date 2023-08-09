@@ -5,8 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import ru.practicum.shareit.request.model.ItemRequest;
 import ru.practicum.shareit.user.model.User;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 
 /**
  * TODO Sprint add-controllers.
@@ -17,17 +16,24 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Entity
+@Table(name = "ITEMS")
 public class Item {
-    private int id;
-    @NotBlank(message = "название не может быть пустым")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
     private String name;
-    @NotBlank(message = "описание не может быть пустым")
+    @Column(nullable = false)
     private String description;
-    @NotNull
+    @Column(name = "IS_AVAILABLE", nullable = false)
     private Boolean available;
-    @NotNull
-    @NotBlank(message = "вещь не может быть без хозяина")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ToString.Exclude
+    @JoinColumn(name = "OWNER_ID")
     private User owner;
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ToString.Exclude
+    @JoinColumn(name = "REQUEST_ID")
     private ItemRequest request;
-
 }

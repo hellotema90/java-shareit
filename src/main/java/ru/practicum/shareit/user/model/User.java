@@ -3,8 +3,7 @@ package ru.practicum.shareit.user.model;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
+import javax.persistence.*;
 
 /**
  * TODO Sprint add-controllers.
@@ -15,11 +14,14 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Entity
+@Table(name = "USERS")
 public class User {
-    private int id;
-    @NotBlank(message = "имя не может быть пустым")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(nullable = false)
     private String name;
-    @Email
-    @NotBlank(message = "у пользователя должна быть почта")
+    @Column(nullable = false, unique = true)
     private String email;
 }

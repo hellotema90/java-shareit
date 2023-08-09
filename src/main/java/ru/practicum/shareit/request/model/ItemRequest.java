@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import ru.practicum.shareit.user.model.User;
 
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -17,11 +18,18 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@Entity
+@Table(name = "REQUESTS")
 public class ItemRequest {
-    private  int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     @NotBlank(message = "описание не может быть пустым")
+    @Column(name = "description")
     private String description;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "REQUEST_ID")
     private User requestor;
-    @NotNull
-    private LocalDate created;
+    //@NotNull
+    //private LocalDate created;
 }
