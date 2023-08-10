@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     public User getUserById(long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Пользователь с таким id %d not не найден", id)));
+                .orElseThrow(() -> new NotFoundException(String.format("Пользователь с таким id %d не найден", id)));
     }
 
     @Transactional
