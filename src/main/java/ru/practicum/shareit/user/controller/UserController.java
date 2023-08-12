@@ -24,17 +24,15 @@ import java.util.Map;
 public class UserController {
     private final UserService userService;
 
-
     @PostMapping
     public UserDto addUser(@Valid @RequestBody UserDto userDto) {
         return userService.addUser(UserMapper.toUser(userDto));
     }
 
     @PatchMapping("{id}")
-    public UserDto updateUser(@Valid @PathVariable int id, @RequestBody Map<String, String> updates) {
+    public UserDto updateUser(@Valid @PathVariable long id, @RequestBody Map<String, String> updates) {
         return userService.updateUser(id, updates);
     }
-
 
     @GetMapping
     public List<UserDto> getAllUsers() {
@@ -42,12 +40,12 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable int id) {
-        return userService.getUserById(id);
+    public UserDto getUserById(@PathVariable long id) {
+        return userService.getUserDtoById(id);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteUserById(@PathVariable int id) {
+    public void deleteUserById(@PathVariable long id) {
         userService.deleteUserById(id);
     }
 }

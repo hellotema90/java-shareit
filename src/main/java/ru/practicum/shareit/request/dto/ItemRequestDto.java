@@ -20,7 +20,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ItemRequestDto {
-    private  int id;
+    private int id;
     @NotBlank(message = "описание не может быть пустым")
     private String description;
     private User requestor;
