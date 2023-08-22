@@ -56,7 +56,10 @@ class BookingRepositoryTest {
                 .start(start.plusMinutes(30)).end(end.plusMinutes(30)).build();
         userRepository.saveAll(List.of(user1, user2, user3));
         itemRepository.saveAll(List.of(item1, item2, item3));
-        bookingRepository.saveAll(List.of(booking1, booking2, booking3, booking4));
+        bookingRepository.saveAll(List.of(booking1));
+        bookingRepository.saveAll(List.of(booking2));
+        bookingRepository.saveAll(List.of(booking3));
+        bookingRepository.saveAll(List.of(booking4));
     }
 
     @Test
