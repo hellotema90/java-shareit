@@ -10,6 +10,8 @@ import ru.practicum.shareit.booking.model.State;
 import ru.practicum.shareit.booking.service.BookingService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 /**
@@ -44,13 +46,17 @@ public class BookingController {
 
     @GetMapping
     public List<OutputBookingDto> getBookingsOfBooker(@RequestParam(defaultValue = "ALL") String state,
-                                                      @RequestHeader(userIdInHeader) Long bookerId) {
-        return bookingService.getBookingsOfBooker(State.getState(state), bookerId);
+                                                      @RequestHeader(userIdInHeader) Long bookerId,
+                                                      @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+                                                      @RequestParam(defaultValue = "30") @Positive int size) {
+        return bookingService.getBookingsOfBooker(State.getState(state), bookerId, from, size);
     }
 
     @GetMapping("/owner")
     List<OutputBookingDto> getBookingsOfOwner(@RequestParam(defaultValue = "ALL") String state,
-                                              @RequestHeader(userIdInHeader) Long ownerId) {
-        return bookingService.getBookingsOfOwner(State.getState(state), ownerId);
+                                              @RequestHeader(userIdInHeader) Long ownerId,
+                                              @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+                                              @RequestParam(defaultValue = "20") @Positive int size) {
+        return bookingService.getBookingsOfOwner(State.getState(state), ownerId, from, size);
     }
 }

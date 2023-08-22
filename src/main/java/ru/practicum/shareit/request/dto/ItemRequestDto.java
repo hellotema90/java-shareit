@@ -1,15 +1,13 @@
 package ru.practicum.shareit.request.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import ru.practicum.shareit.user.model.User;
+import ru.practicum.shareit.item.dto.ItemDto;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * TODO Sprint add-item-requests.
@@ -19,11 +17,12 @@ import java.time.LocalDate;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class ItemRequestDto {
-    private int id;
+    private Long id;
     @NotBlank(message = "описание не может быть пустым")
     private String description;
-    private User requestor;
-    @NotNull
-    private LocalDate created;
+    private List<ItemDto> items;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
+    private LocalDateTime created;
 }
