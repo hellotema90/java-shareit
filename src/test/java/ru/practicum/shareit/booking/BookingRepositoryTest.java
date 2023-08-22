@@ -37,29 +37,26 @@ class BookingRepositoryTest {
 
     @BeforeEach
     void beforeEach() {
-        user1 = User.builder().id(1L).name("user1").email("user1@mail.ru").build();
-        user2 = User.builder().id(2L).name("user2").email("user2@mail.ru").build();
-        user3 = User.builder().id(3L).name("user3").email("user3@mail.ru").build();
-        item1 = Item.builder().id(1L).name("item1").description("iDescr1").available(true)
+        user1 = User.builder().name("user1").email("user1@mail.ru").build();
+        user2 = User.builder().name("user2").email("user2@mail.ru").build();
+        user3 = User.builder().name("user3").email("user3@mail.ru").build();
+        item1 = Item.builder().name("item1").description("iDescr1").available(true)
                 .owner(user1).request(null).build();
-        item2 = Item.builder().id(2L).name("item2").description("iDescr2").available(true)
+        item2 = Item.builder().name("item2").description("iDescr2").available(true)
                 .owner(user1).request(null).build();
-        item3 = Item.builder().id(3L).name("item3").description("iDescr3").available(true)
+        item3 = Item.builder().name("item3").description("iDescr3").available(true)
                 .owner(user2).request(null).build();
-        booking1 = Booking.builder().id(1L).item(item1).booker(user2).status(BookingStatus.APPROVED)
+        booking1 = Booking.builder().item(item1).booker(user2).status(BookingStatus.APPROVED)
                 .start(start).end(end).build();
-        booking2 = Booking.builder().id(2L).item(item2).booker(user2).status(BookingStatus.APPROVED)
+        booking2 = Booking.builder().item(item2).booker(user2).status(BookingStatus.APPROVED)
                 .start(start.plusMinutes(10)).end(end.plusMinutes(10)).build();
-        booking3 = Booking.builder().id(3L).item(item2).booker(user3).status(BookingStatus.APPROVED)
+        booking3 = Booking.builder().item(item2).booker(user3).status(BookingStatus.APPROVED)
                 .start(start.plusMinutes(20)).end(end.plusMinutes(20)).build();
-        booking4 = Booking.builder().id(4L).item(item3).booker(user3).status(BookingStatus.APPROVED)
+        booking4 = Booking.builder().item(item3).booker(user3).status(BookingStatus.APPROVED)
                 .start(start.plusMinutes(30)).end(end.plusMinutes(30)).build();
         userRepository.saveAll(List.of(user1, user2, user3));
         itemRepository.saveAll(List.of(item1, item2, item3));
-        bookingRepository.saveAll(List.of(booking1));
-        bookingRepository.saveAll(List.of(booking2));
-        bookingRepository.saveAll(List.of(booking3));
-        bookingRepository.saveAll(List.of(booking4));
+        bookingRepository.saveAll(List.of(booking1, booking2, booking3, booking4));
     }
 
     @Test
