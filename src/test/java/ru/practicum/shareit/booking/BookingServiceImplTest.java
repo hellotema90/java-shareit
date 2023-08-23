@@ -10,10 +10,10 @@ import ru.practicum.shareit.booking.dto.InputBookingDto;
 import ru.practicum.shareit.booking.dto.OutputBookingDto;
 import ru.practicum.shareit.booking.model.Booking;
 import ru.practicum.shareit.booking.model.BookingStatus;
-import ru.practicum.shareit.booking.model.State;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.booking.service.BookingServiceImpl;
 import ru.practicum.shareit.exeption.AccessException;
+import ru.practicum.shareit.exeption.ArgumentException;
 import ru.practicum.shareit.exeption.NotFoundException;
 import ru.practicum.shareit.exeption.ValidationException;
 import ru.practicum.shareit.item.model.Item;
@@ -223,12 +223,12 @@ class BookingServiceImplTest {
         when(bookingRepository.findAllByBookerIdAndStartAfter(anyLong(), any(), any())).thenReturn(bookings);
         when(bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(anyLong(), any(), any())).thenReturn(bookings);
         Long bookerId = booking.getBooker().getId();
-        assertEquals(1, bookingService.getBookingsOfBooker(State.valueOf("ALL"), bookerId, 0, 10).size());
-        assertEquals(1, bookingService.getBookingsOfBooker(State.valueOf("WAITING"), bookerId, 0, 10).size());
-        assertEquals(1, bookingService.getBookingsOfBooker(State.valueOf("REJECTED"), bookerId, 0, 10).size());
-        assertEquals(1, bookingService.getBookingsOfBooker(State.valueOf("CURRENT"), bookerId, 0, 10).size());
-        assertEquals(1, bookingService.getBookingsOfBooker(State.valueOf("PAST"), bookerId, 0, 10).size());
-        assertEquals(1, bookingService.getBookingsOfBooker(State.valueOf("FUTURE"), bookerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfBooker("ALL", bookerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfBooker("WAITING", bookerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfBooker("REJECTED", bookerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfBooker("CURRENT", bookerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfBooker("PAST", bookerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfBooker("FUTURE", bookerId, 0, 10).size());
     }
 
     @Test
@@ -241,11 +241,19 @@ class BookingServiceImplTest {
         when(bookingRepository.findAllByOwnerIdAndStartBeforeAndEndAfter(anyLong(), any(), any())).thenReturn(bookings);
         when(bookingRepository.findAllByOwnerId(anyLong(), any())).thenReturn(bookings);
         Long ownerId = booking.getItem().getOwner().getId();
-        assertEquals(1, bookingService.getBookingsOfOwner(State.valueOf("ALL"), ownerId, 0, 10).size());
-        assertEquals(1, bookingService.getBookingsOfOwner(State.valueOf("WAITING"), ownerId, 0, 10).size());
-        assertEquals(1, bookingService.getBookingsOfOwner(State.valueOf("REJECTED"), ownerId, 0, 10).size());
-        assertEquals(1, bookingService.getBookingsOfOwner(State.valueOf("CURRENT"), ownerId, 0, 10).size());
-        assertEquals(1, bookingService.getBookingsOfOwner(State.valueOf("PAST"), ownerId, 0, 10).size());
-        assertEquals(1, bookingService.getBookingsOfOwner(State.valueOf("FUTURE"), ownerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfOwner("ALL", ownerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfOwner("WAITING", ownerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfOwner("REJECTED", ownerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfOwner("CURRENT", ownerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfOwner("PAST", ownerId, 0, 10).size());
+        assertEquals(1, bookingService.getBookingsOfOwner("FUTURE", ownerId, 0, 10).size());
+    }
+
+    @Test
+    void getBookingsOfBookerWithBadState() {
+        when(userRepository.findById(anyLong())).thenReturn(Optional.of(user));
+        assertThrows(ArgumentException.class, () ->
+                bookingService.getBookingsOfBooker("LOL", user.getId(), 0, 10));
+        verify(userRepository).findById(anyLong());
     }
 }

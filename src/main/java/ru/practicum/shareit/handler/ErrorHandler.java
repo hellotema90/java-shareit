@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.practicum.shareit.exeption.*;
-import ru.practicum.shareit.exeption.IllegalArgumentException;
+import ru.practicum.shareit.exeption.ArgumentException;
 
 @RestControllerAdvice
 public class ErrorHandler {
@@ -20,7 +20,7 @@ public class ErrorHandler {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handlerIllegalArgumentException(final IllegalArgumentException e) {
+    public ErrorResponse handlerIllegalArgumentException(final ArgumentException e) {
         return new ErrorResponse(
                 e.getMessage()
         );

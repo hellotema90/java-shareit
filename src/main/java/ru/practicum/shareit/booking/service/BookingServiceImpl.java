@@ -13,10 +13,7 @@ import ru.practicum.shareit.booking.model.BookingStatus;
 import ru.practicum.shareit.booking.mapper.BookingMapper;
 import ru.practicum.shareit.booking.model.State;
 import ru.practicum.shareit.booking.repository.BookingRepository;
-import ru.practicum.shareit.exeption.AccessException;
-import ru.practicum.shareit.exeption.InternalServerError;
-import ru.practicum.shareit.exeption.NotFoundException;
-import ru.practicum.shareit.exeption.ValidationException;
+import ru.practicum.shareit.exeption.*;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.repository.ItemRepository;
 import ru.practicum.shareit.user.model.User;
@@ -126,8 +123,9 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Transactional(readOnly = true)
-    public List<OutputBookingDto> getBookingsOfBooker(State state, Long bookerId, int from, int size) {
+    public List<OutputBookingDto> getBookingsOfBooker(String stateText, Long bookerId, int from, int size) {
         getUserById(bookerId);
+        State state = State.getState(stateText);
         Pageable pageable = PageRequest.of(size == 0 ? 0 : from / size, size, BookingRepository.SORT_BY_START_BY_DESC);
         switch (state) {
             case WAITING:
@@ -150,13 +148,14 @@ public class BookingServiceImpl implements BookingService {
                 return BookingMapper.toBookingDtoRequestsList(
                         bookingRepository.findAllByBookerId(bookerId, pageable));
             default:
-                throw new IllegalArgumentException("Unknown state: UNSUPPORTED_STATUS");
+                throw new ArgumentException("Unknown state: UNSUPPORTED_STATUS");
         }
     }
 
     @Transactional(readOnly = true)
-    public List<OutputBookingDto> getBookingsOfOwner(State state, Long ownerId, int from, int size) {
+    public List<OutputBookingDto> getBookingsOfOwner(String stateText, Long ownerId, int from, int size) {
         getUserById(ownerId);
+        State state = State.getState(stateText);
         Pageable pageable = PageRequest.of(size == 0 ? 0 : from / size, size, BookingRepository.SORT_BY_START_BY_DESC);
         switch (state) {
             case WAITING:
@@ -179,7 +178,7 @@ public class BookingServiceImpl implements BookingService {
                 return BookingMapper.toBookingDtoRequestsList(
                         bookingRepository.findAllByOwnerId(ownerId, pageable));
             default:
-                throw new IllegalArgumentException("Unknown state: UNSUPPORTED_STATUS");
+                throw new ArgumentException("Unknown state: UNSUPPORTED_STATUS");
         }
     }
 }
