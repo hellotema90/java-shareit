@@ -14,6 +14,7 @@ import ru.practicum.shareit.booking.model.State;
 import ru.practicum.shareit.booking.repository.BookingRepository;
 import ru.practicum.shareit.booking.service.BookingServiceImpl;
 import ru.practicum.shareit.exeption.AccessException;
+import ru.practicum.shareit.exeption.InternalServerError;
 import ru.practicum.shareit.exeption.NotFoundException;
 import ru.practicum.shareit.exeption.ValidationException;
 import ru.practicum.shareit.item.model.Item;
@@ -78,14 +79,12 @@ class BookingServiceImplTest {
 
     @Test
     void createUserEmpty() {
-        //when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> bookingService.addBooking(inputBookingDto, user.getId()));
         verify(bookingRepository, never()).save(any());
     }
 
     @Test
     void createWithoutUser() {
-        //when(userRepository.findById(anyLong())).thenReturn(Optional.empty());
         assertThrows(NotFoundException.class, () -> bookingService.addBooking(inputBookingDto, user.getId()));
         verify(bookingRepository, never()).save(any());
     }

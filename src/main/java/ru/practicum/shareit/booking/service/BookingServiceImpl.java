@@ -79,11 +79,11 @@ public class BookingServiceImpl implements BookingService {
         getUserById(userId);
         Booking booking = getBookingById(bookingId, userId);
         if (booking.getStatus().equals(BookingStatus.APPROVED)) {
-            throw new ValidationException(String.format("Booking with id: %d already have status %s",
+            throw new ValidationException(String.format("бронирование с id: %d уже имеет статус %s",
                     bookingId, BookingStatus.APPROVED));
         }
         if (!userId.equals(getItemOwnerId(booking))) {
-            throw new AccessException(String.format("Access to User id:%s for booking id:%s is denied",
+            throw new AccessException(String.format("доступ к пользователю с id:%s для бронирования с id:%s отказан",
                     userId, booking.getId()));
         }
         BookingStatus bookingStatus = approve ? BookingStatus.APPROVED : BookingStatus.REJECTED;
@@ -100,16 +100,15 @@ public class BookingServiceImpl implements BookingService {
     private Long getItemOwnerId(Booking booking) {
         User booker = booking.getBooker();
         if (booker == null) {
-            throw new InternalServerError(String.format("Booking with id: %s Bouker is not installed!", booker.getId()));
+            throw new InternalServerError(String.format("бронирование с id: %s у Booker не установлено", booker.getId()));
         }
-        Long bookerId = booker.getId();
         Item item = booking.getItem();
         if (item == null) {
-            throw new InternalServerError(String.format("Booking with id: %s Item is not installed!", booker.getId()));
+            throw new InternalServerError(String.format("бронирование с id: %s вещь не установлена", booker.getId()));
         }
         User itemOwner = item.getOwner();
         if (itemOwner == null) {
-            throw new InternalServerError(String.format("Booking with id: %s Owner is not installed!", booker.getId()));
+            throw new InternalServerError(String.format("бронирование с id: %s владелец не установлен", booker.getId()));
         }
         return itemOwner.getId();
     }
@@ -120,7 +119,7 @@ public class BookingServiceImpl implements BookingService {
         Long itemOwnerId = getItemOwnerId(booking);
         Long bookerId = booking.getBooker().getId();
         if (!((bookerId.equals(userId)) || (itemOwnerId.equals(userId)))) {
-            throw new AccessException(String.format("Access to User id:%s for booking id:%s is denied",
+            throw new AccessException(String.format("доступ к пользователю с id:%s для бронирования с id:%s отказан",
                     userId, booking.getId()));
         }
         return BookingMapper.toBookingDtoRequest(booking);
