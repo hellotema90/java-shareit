@@ -23,7 +23,7 @@ import java.util.Map;
 @Validated
 public class ItemController {
     private final ItemService itemService;
-    private final String userIdInHeader = "X-Sharer-User-Id";
+    private static final String userIdInHeader = "X-Sharer-User-Id";
 
     @PostMapping
     public ItemDto create(@RequestHeader(userIdInHeader) long ownerId, @Valid @RequestBody @NotNull ItemDto itemDto) {
@@ -53,9 +53,6 @@ public class ItemController {
                                        @RequestParam(name = "text") String text,
                                        @RequestParam(defaultValue = "0") @PositiveOrZero int from,
                                        @RequestParam(defaultValue = "10") @Positive int size) {
-        if ((text == null) || (text.isBlank())) {
-            return List.of();
-        }
         return itemService.getItemByText(text, from, size);
     }
 

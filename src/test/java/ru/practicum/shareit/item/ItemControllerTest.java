@@ -32,13 +32,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ItemControllerTest {
     private static final String userIdInHeader = "X-Sharer-User-Id";
     @MockBean
-    ItemService itemService;
+    private ItemService itemService;
     @Autowired
-    MockMvc mvc;
+    private MockMvc mvc;
     @Autowired
-    ObjectMapper objectMapper;
-    Item item;
-    ItemDto itemDto;
+    private ObjectMapper objectMapper;
+    private Item item;
+    private ItemDto itemDto;
 
     @BeforeEach
     void beforeEach() {

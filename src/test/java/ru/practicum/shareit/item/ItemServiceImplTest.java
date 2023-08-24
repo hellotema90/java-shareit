@@ -40,23 +40,23 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class ItemServiceImplTest {
     @Mock
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
     @Mock
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Mock
-    BookingRepository bookingRepository;
+    private BookingRepository bookingRepository;
     @Mock
-    CommentRepository commentRepository;
+    private CommentRepository commentRepository;
     @Mock
-    ItemRequestRepository itemRequestRepository;
+    private ItemRequestRepository itemRequestRepository;
     @InjectMocks
-    ItemServiceImpl itemService;
-    User user, user2;
-    Item item;
-    ItemDto itemDto;
-    Comment comment;
-    ItemRequest itemRequest;
-    Booking booking;
+    private ItemServiceImpl itemService;
+    private User user, user2;
+    private Item item;
+    private ItemDto itemDto;
+    private Comment comment;
+    private ItemRequest itemRequest;
+    private Booking booking;
 
     @BeforeEach
     void beforeEach() {
@@ -198,7 +198,6 @@ class ItemServiceImplTest {
     void searchAvailableItemsWithEmptyRequest() {
         List<ItemDto> items = itemService.getItemByText("", 0, 100);
         assertTrue(items.isEmpty());
-        verify(itemRepository).searchAvailableItems(anyString(), any(Pageable.class));
     }
 
     @Test

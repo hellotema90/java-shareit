@@ -38,14 +38,14 @@ class BookingServiceImplTest {
     @Mock
     UserRepository userRepository;
     @Mock
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
     @InjectMocks
-    BookingServiceImpl bookingService;
+    private BookingServiceImpl bookingService;
 
-    InputBookingDto inputBookingDto;
-    Booking booking;
-    User user, user2, user3;
-    Item item;
+    private InputBookingDto inputBookingDto;
+    private Booking booking;
+    private User user, user2, user3;
+    private Item item;
 
     @BeforeEach
     void beforeEach() {

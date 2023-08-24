@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookingRepository extends JpaRepository<Booking, Long> {
-    Sort SORT_BY_START_BY_DESC = Sort.by(Sort.Direction.DESC, "start");
+    Sort SORT_BY_START_DESC = Sort.by(Sort.Direction.DESC, "start");
 
     List<Booking> findAllByBookerId(long bookerId, Pageable pageable);
 

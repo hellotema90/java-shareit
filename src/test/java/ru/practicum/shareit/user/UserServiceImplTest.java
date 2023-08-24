@@ -26,11 +26,11 @@ import static org.mockito.Mockito.*;
 class UserServiceImplTest {
 
     @Mock
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @InjectMocks
-    UserServiceImpl userService;
-    User user;
-    UserDto userDto;
+    private UserServiceImpl userService;
+    private User user;
+    private UserDto userDto;
 
     @BeforeEach
     void beforeEach() {

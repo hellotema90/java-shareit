@@ -126,7 +126,7 @@ public class BookingServiceImpl implements BookingService {
     public List<OutputBookingDto> getBookingsOfBooker(String stateText, Long bookerId, int from, int size) {
         getUserById(bookerId);
         State state = State.getState(stateText);
-        Pageable pageable = PageRequest.of(size == 0 ? 0 : from / size, size, BookingRepository.SORT_BY_START_BY_DESC);
+        Pageable pageable = PageRequest.of(size == 0 ? 0 : from / size, size, BookingRepository.SORT_BY_START_DESC);
         switch (state) {
             case WAITING:
                 return BookingMapper.toBookingDtoRequestsList(
@@ -156,7 +156,7 @@ public class BookingServiceImpl implements BookingService {
     public List<OutputBookingDto> getBookingsOfOwner(String stateText, Long ownerId, int from, int size) {
         getUserById(ownerId);
         State state = State.getState(stateText);
-        Pageable pageable = PageRequest.of(size == 0 ? 0 : from / size, size, BookingRepository.SORT_BY_START_BY_DESC);
+        Pageable pageable = PageRequest.of(size == 0 ? 0 : from / size, size, BookingRepository.SORT_BY_START_DESC);
         switch (state) {
             case WAITING:
                 return BookingMapper.toBookingDtoRequestsList(

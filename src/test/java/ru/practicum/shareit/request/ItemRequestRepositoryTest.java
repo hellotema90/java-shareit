@@ -20,14 +20,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DataJpaTest
 class ItemRequestRepositoryTest {
     @Autowired
-    ItemRequestRepository itemRequestRepository;
+    private ItemRequestRepository itemRequestRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     final Sort sort = Sort.by(Sort.Direction.DESC, "created");
 
-    User user1, user2;
-    ItemRequest itemRequest1, itemRequest2, itemRequest3, itemRequest4;
+    private User user1, user2;
+    private ItemRequest itemRequest1, itemRequest2, itemRequest3, itemRequest4;
 
     @BeforeEach
     void fillTable() {

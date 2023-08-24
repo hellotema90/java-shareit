@@ -28,12 +28,12 @@ class BookingRepositoryTest {
     @Autowired
     ItemRepository itemRepository;
 
-    User user1, user2, user3;
-    Item item1, item2, item3;
-    Booking booking1, booking2, booking3, booking4;
-    LocalDateTime start = LocalDateTime.now();
-    LocalDateTime end = LocalDateTime.now().plusHours(1);
-    Pageable pageable = PageRequest.of(0, 10, BookingRepository.SORT_BY_START_BY_DESC);
+    private User user1, user2, user3;
+    private Item item1, item2, item3;
+    private Booking booking1, booking2, booking3, booking4;
+    private final LocalDateTime start = LocalDateTime.now();
+    private final LocalDateTime end = LocalDateTime.now().plusHours(1);
+    private final Pageable pageable = PageRequest.of(0, 10, BookingRepository.SORT_BY_START_DESC);
 
     @BeforeEach
     void beforeEach() {
@@ -70,7 +70,7 @@ class BookingRepositoryTest {
         assertEquals(booking2.getItem().getName(), bookings.get(0).getItem().getName());
 
         bookings = bookingRepository.findAllByBookerIdAndStartBeforeAndEndAfter(user2.getId(), testTime,
-                PageRequest.of(0, 1, BookingRepository.SORT_BY_START_BY_DESC));
+                PageRequest.of(0, 1, BookingRepository.SORT_BY_START_DESC));
         assertEquals(1, bookings.size());
         assertEquals(booking2.getItem().getName(), bookings.get(0).getItem().getName());
         bookings = bookingRepository.findAllByOwnerId(user1.getId(), pageable);

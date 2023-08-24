@@ -35,7 +35,6 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
-    private final Sort sort = Sort.by(Sort.Direction.ASC, "created");
 
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
@@ -75,7 +74,7 @@ public class ItemServiceImpl implements ItemService {
         }
         if (updates.containsKey("description")) {
             String value = updates.get("description");
-            checkString(value, "Name");
+            checkString(value, "Description");
             item.setDescription(value);
         }
         if (updates.containsKey("available")) {
@@ -113,7 +112,7 @@ public class ItemServiceImpl implements ItemService {
         ItemDto itemDto = ItemMapper.toItemDto(item);
         if (item.getOwner() != null && item.getOwner().getId().equals(userId)) {
             setBookings(itemDto, bookingRepository.findAllByItemIdAndStatus(itemId, BookingStatus.APPROVED,
-                    PageRequest.of(0, 10000, BookingRepository.SORT_BY_START_BY_DESC)));
+                    PageRequest.of(0, 10000, BookingRepository.SORT_BY_START_DESC)));
         }
         setComments(itemDto, comments);
         return itemDto;
@@ -173,11 +172,11 @@ public class ItemServiceImpl implements ItemService {
     public List<ItemDto> getAllItems(long ownerId, int from, int size) {
         getUserById(ownerId);
         List<Item> items = itemRepository.findAllByOwnerId(ownerId, PageRequest.of(from / size, size));
-        Pageable pageable = PageRequest.of(from / size, size, BookingRepository.SORT_BY_START_BY_DESC);
+        Pageable pageable = PageRequest.of(from / size, size, BookingRepository.SORT_BY_START_DESC);
         List<Booking> bookings = bookingRepository.findAllByOwnerIdAndStatus(ownerId, BookingStatus.APPROVED, pageable);
         List<Comment> comments = commentRepository.findAllByItemIdIn(items.stream()
                 .map(Item::getId)
-                .collect(Collectors.toList()), sort);
+                .collect(Collectors.toList()), Sort.by(Sort.Direction.ASC, "created"));
         List<ItemDto> itemDtos = ItemMapper.toItemDtoList(items);
         itemDtos.forEach(i -> {
             setBookings(i, bookings);
@@ -187,6 +186,9 @@ public class ItemServiceImpl implements ItemService {
     }
 
     public List<ItemDto> getItemByText(String text, int from, int size) {
+        if ((text == null) || (text.isBlank())) {
+            return List.of();
+        }
         Pageable pageable = PageRequest.of(from / size, size);
         return ItemMapper.toItemDtoList(itemRepository.searchAvailableItems(text, pageable));
     }

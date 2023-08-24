@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class UserDtoTest {
     @Autowired
     private JacksonTester<UserDto> jacksonTester;
-    UserDto userDto = UserDto.builder().id(1L).name("userDto1").email("userDto1@mail.ru").build();
+    private final UserDto userDto = UserDto.builder().id(1L).name("userDto1").email("userDto1@mail.ru").build();
 
     @Test
     void testMapper() throws Exception {

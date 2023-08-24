@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @DirtiesContext
 class UserRepositoryTest {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     private final EasyRandom generator = new EasyRandom();
 
     @Test

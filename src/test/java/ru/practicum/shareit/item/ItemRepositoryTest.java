@@ -15,10 +15,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @DataJpaTest
 class ItemRepositoryTest {
     @Autowired
-    ItemRepository itemRepository;
+    private ItemRepository itemRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Test
     void searchAvailableItemsIsOk() {

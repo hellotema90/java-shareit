@@ -39,11 +39,11 @@ class BookingControllerTest {
     @MockBean
     BookingService bookingService;
 
-    InputBookingDto inputBookingDto;
-    OutputBookingDto outputBookingDto;
-    Booking booking;
-    User user;
-    Item item;
+    private InputBookingDto inputBookingDto;
+    private OutputBookingDto outputBookingDto;
+    private Booking booking;
+    private User user;
+    private Item item;
 
     @BeforeEach
     void beforeEach() {
@@ -81,7 +81,6 @@ class BookingControllerTest {
     @Test
     void createWithTimeCrossing() throws Exception {
         inputBookingDto.setEnd(inputBookingDto.getStart().minusMinutes(30));
-        System.out.println(inputBookingDto);
         mvc.perform(post("/bookings")
                         .header(userIdInHeader, 1L)
                         .content(objectMapper.writeValueAsString(inputBookingDto))
