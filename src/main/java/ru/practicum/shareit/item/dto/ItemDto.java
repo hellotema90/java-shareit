@@ -22,18 +22,15 @@ import java.util.List;
 @Data
 public class ItemDto {
     private Long id;
-    @NotNull
     @NotBlank(message = "название не может быть пустым")
     private String name;
-    @NotNull
     @NotBlank(message = "описание не может быть пустым")
     private String description;
     @NotNull
     private Boolean available;
     @JsonIgnore
     private User owner;
-    @JsonIgnore
-    private Long request;
+    private Long requestId;
     private ShortBookingDto lastBooking;
     private ShortBookingDto nextBooking;
     private List<CommentDto> comments;

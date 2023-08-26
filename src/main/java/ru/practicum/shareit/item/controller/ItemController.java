@@ -1,13 +1,16 @@
 package ru.practicum.shareit.item.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.item.mapper.ItemMapper;
 import ru.practicum.shareit.item.service.ItemService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 import java.util.Map;
 
@@ -17,18 +20,19 @@ import java.util.Map;
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
+@Validated
 public class ItemController {
     private final ItemService itemService;
-    private final String userIdInHeader = "X-Sharer-User-Id";
+    private static final String userIdInHeader = "X-Sharer-User-Id";
 
     @PostMapping
-    public ItemDto create(@RequestHeader(userIdInHeader) long ownerId, @Valid @RequestBody ItemDto itemDto) {
-        return itemService.addItem(ownerId, ItemMapper.toItem(itemDto));
+    public ItemDto create(@RequestHeader(userIdInHeader) long ownerId, @Valid @RequestBody @NotNull ItemDto itemDto) {
+        return itemService.addItem(ownerId, itemDto);
     }
 
     @PatchMapping("/{itemId}")
     public ItemDto patchUpdate(@RequestHeader(userIdInHeader) long ownerId, @PathVariable long itemId,
-                               @RequestBody Map<String, String> updates) {
+                               @RequestBody @NotNull Map<String, String> updates) {
         return itemService.updateItem(ownerId, itemId, updates);
     }
 
@@ -38,14 +42,18 @@ public class ItemController {
     }
 
     @GetMapping
-    public List<ItemDto> getAllItems(@RequestHeader(userIdInHeader) long ownerId) {
-        return itemService.getAllItems(ownerId);
+    public List<ItemDto> getAllItems(@RequestHeader(userIdInHeader) long ownerId,
+                                     @Valid @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+                                     @Valid @RequestParam(defaultValue = "10") @Positive int size) {
+        return itemService.getAllItems(ownerId, from, size);
     }
 
     @GetMapping("/search")
     public List<ItemDto> getItemByText(@RequestHeader(userIdInHeader) long userId,
-                                       @RequestParam(name = "text") String text) {
-        return itemService.getItemByText(userId, text);
+                                       @RequestParam(name = "text") String text,
+                                       @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+                                       @RequestParam(defaultValue = "10") @Positive int size) {
+        return itemService.getItemByText(text, from, size);
     }
 
     @DeleteMapping("/{itemId}")

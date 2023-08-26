@@ -29,7 +29,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public UserDto updateUser(long id, Map<String, String> updates) {
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Пользователь с таким id %d not не найден", id)));
+                .orElseThrow(() -> new NotFoundException(String.format("Пользователь с таким id %d не найден", id)));
+        if (!((updates.containsKey("name") || (updates.containsKey("email"))))) {
+            throw new ValidationException("В обновлении нет правильных полей");
+        }
         if (updates.containsKey("name")) {
             String name = updates.get("name");
             user.setName(name.trim());
@@ -63,7 +66,5 @@ public class UserServiceImpl implements UserService {
     public void deleteUserById(long userId) {
         userRepository.deleteById(userId);
     }
-
-
 }
 

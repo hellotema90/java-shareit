@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface ItemService {
-    ItemDto addItem(long ownerId, Item item);
+    ItemDto addItem(long ownerId, ItemDto itemDto);
 
     ItemDto updateItem(long ownerId, long itemId, Map<String, String> updates);
 
@@ -16,13 +16,11 @@ public interface ItemService {
 
     ItemDto getItemDtoById(long itemId, long userId);
 
-    Long getOwnerId(long itemId);
-
     void deleteItemById(long ownerId, long itemId);
 
-    List<ItemDto> getAllItems(long ownerId);
+    List<ItemDto> getAllItems(long ownerId, int from, int size);
 
-    List<ItemDto> getItemByText(long userId, String text);
+    List<ItemDto> getItemByText(String text, int from, int size);
 
     CommentDto addComment(long userId, long itemId, CommentDto commentDto);
 }

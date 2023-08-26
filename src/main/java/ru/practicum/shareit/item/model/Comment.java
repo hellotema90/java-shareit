@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     @Column(name = "TEXT", nullable = false)
     private String text;
     @ToString.Exclude
