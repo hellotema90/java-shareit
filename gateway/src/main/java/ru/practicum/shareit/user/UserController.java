@@ -8,9 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.user.dto.UserDto;
-import ru.practicum.shareit.validation.Create;
-import ru.practicum.shareit.validation.Update;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 
 @Slf4j
@@ -23,14 +22,13 @@ public class UserController {
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public ResponseEntity<Object> createUser(@RequestBody @Validated(Create.class) UserDto userDto) {
-        log.info("" + userDto);
+    public ResponseEntity<Object> createUser(@RequestBody @Valid UserDto userDto) {
         return userClient.createUser(userDto);
     }
 
     @PatchMapping("/{userId}")
     public ResponseEntity<Object> update(@PathVariable("userId") long userId,
-                                         @RequestBody @Validated(Update.class) UserDto userDto) {
+                                         @RequestBody UserDto userDto) {
         return userClient.updateUser(userId, userDto);
     }
 

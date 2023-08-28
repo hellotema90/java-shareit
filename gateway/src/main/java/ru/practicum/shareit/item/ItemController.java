@@ -8,13 +8,11 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.item.dto.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
-import ru.practicum.shareit.validation.Create;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
-import javax.validation.groups.Default;
 import java.util.List;
 
 @Controller
@@ -27,7 +25,7 @@ public class ItemController {
 
     @PostMapping
     public ResponseEntity<Object> createItem(@RequestHeader(userIdInHeader) @Positive long userId,
-                                             @RequestBody @Validated({Create.class, Default.class}) @NotNull
+                                             @RequestBody @Valid @NotNull
                                              ItemDto itemDto) {
         return itemClient.createItem(userId, itemDto);
     }
@@ -35,7 +33,7 @@ public class ItemController {
     @PatchMapping("/{itemId}")
     public ResponseEntity<Object> updateItem(@RequestHeader(userIdInHeader) @Positive Long userId,
                                              @PathVariable @Positive long itemId,
-                                             @RequestBody @Valid @NotNull ItemDto itemDto) {
+                                             @RequestBody ItemDto itemDto) {
         return itemClient.updateItem(userId, itemId, itemDto);
     }
 
