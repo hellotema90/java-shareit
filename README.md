@@ -1,2 +1,5 @@
-# java-shareit
-Template repository for Shareit project.
+# Java-shareit
+shareit - сервис для шеринга вещей.
+Добавление, обновление, удаление вещи, статус для аренды, поиск, бронирование, добавление отзывов.
+Создание запросов вещи и добавление вещи в ответ на запросы других пользователей. Валидация запросов
+Spring Boot, REST, JSON, Hibernate, PostgreSQL, MockMvc, Docker, JUnit.
